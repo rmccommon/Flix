@@ -6,12 +6,11 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Now Playing View Controller-->
+        <!--Movies-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="NowPlayingViewController" customModule="flix" customModuleProvider="target" sceneMemberID="viewController">
@@ -23,53 +22,39 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <activityIndicatorView key="tableFooterView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" id="2X8-qM-gxY">
-                                    <rect key="frame" x="0.0" y="257" width="375" height="20"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                </activityIndicatorView>
+                                <searchBar key="tableHeaderView" contentMode="redraw" placeholder="Search Movies" id="qnK-l1-RA3">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </searchBar>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="movieCell" rowHeight="229" id="AXm-X7-JGX" customClass="MovieCell" customModule="flix" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="229"/>
+                                        <rect key="frame" x="0.0" y="72" width="375" height="229"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="AXm-X7-JGX" id="w09-dn-owI">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="228.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qFB-4Q-UMd">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qFB-4Q-UMd">
                                                     <rect key="frame" x="15" y="11" width="159" height="207"/>
-                                                    <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="159" id="3zg-mf-lOo"/>
-                                                    </constraints>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8s2-XD-WrF">
-                                                    <rect key="frame" x="182" y="57" width="193" height="136"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8s2-XD-WrF">
+                                                    <rect key="frame" x="182" y="57" width="178" height="136"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <string key="text">Description of what we want to see please fix if it runs off the screen i need to type more to see if this woorks right id dont dsa asd</string>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ORf-PE-3PY">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ORf-PE-3PY">
                                                     <rect key="frame" x="182" y="26" width="178" height="38"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="38" id="NOU-QF-4JY"/>
-                                                    </constraints>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <constraints>
-                                                <constraint firstItem="8s2-XD-WrF" firstAttribute="top" secondItem="w09-dn-owI" secondAttribute="topMargin" constant="26" id="0qg-a9-gAA"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="8s2-XD-WrF" secondAttribute="bottom" constant="25" id="3ur-Y7-HLe"/>
-                                                <constraint firstItem="ORf-PE-3PY" firstAttribute="top" secondItem="w09-dn-owI" secondAttribute="topMargin" constant="-5" id="CVo-Gt-CDo"/>
-                                                <constraint firstItem="ORf-PE-3PY" firstAttribute="trailing" secondItem="8s2-XD-WrF" secondAttribute="trailing" id="JfE-Di-mRh"/>
-                                                <constraint firstItem="ORf-PE-3PY" firstAttribute="leading" secondItem="qFB-4Q-UMd" secondAttribute="trailing" constant="8" symbolic="YES" id="Tai-Yf-3xs"/>
-                                                <constraint firstItem="8s2-XD-WrF" firstAttribute="leading" secondItem="qFB-4Q-UMd" secondAttribute="trailing" constant="8" symbolic="YES" id="Tb1-Nh-g7Y"/>
-                                                <constraint firstItem="qFB-4Q-UMd" firstAttribute="centerY" secondItem="w09-dn-owI" secondAttribute="centerY" id="Xvk-dK-DJj"/>
-                                                <constraint firstItem="qFB-4Q-UMd" firstAttribute="bottom" secondItem="w09-dn-owI" secondAttribute="bottomMargin" id="yjs-wl-UL8"/>
-                                                <constraint firstItem="qFB-4Q-UMd" firstAttribute="leading" secondItem="w09-dn-owI" secondAttribute="leadingMargin" constant="-1" id="z6y-cH-AnW"/>
-                                            </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="movieImage" destination="qFB-4Q-UMd" id="Tqk-Hi-NGa"/>
@@ -79,13 +64,19 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="2X8-qM-gxY">
+                                <rect key="frame" x="0.0" y="319" width="375" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="ZGu-Ij-kJw"/>
+                    <navigationItem key="navigationItem" title="Movies" id="ZGu-Ij-kJw"/>
                     <connections>
                         <outlet property="loadingCircle" destination="2X8-qM-gxY" id="TIx-gB-yjz"/>
+                        <outlet property="movieSearch" destination="qnK-l1-RA3" id="Acx-PY-kFv"/>
                         <outlet property="tableView" destination="6mv-kt-5Me" id="San-aG-kio"/>
                     </connections>
                 </viewController>

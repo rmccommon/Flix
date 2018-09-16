@@ -9,28 +9,31 @@
 import UIKit
 import AlamofireImage
 
-class NowPlayingViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class NowPlayingViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
+    @IBOutlet weak var movieSearch: UISearchBar!
     
     @IBOutlet weak var loadingCircle: UIActivityIndicatorView!
     
     var movies: [[String: Any]] = []
+    var allMovies: [[String: Any]] = []
     var refreshController:UIRefreshControl!
 
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
-        
+        loadingCircle.startAnimating()
         super.viewDidLoad()
-        
+       
         tableView.dataSource = self
         tableView.delegate = self
-        
+        movieSearch.delegate = self
         refreshController = UIRefreshControl()
         refreshController.addTarget(self, action: #selector(NowPlayingViewController.didPullDown(_:)), for: .valueChanged)
         tableView.insertSubview(refreshController, at: 0)
-        
+        tableView.rowHeight = 250
         
         fetchMovies()
+        
         
         
     }
@@ -65,26 +68,45 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource, UITable
         return cell
     }
     func fetchMovies(){
-        loadingCircle.startAnimating()
+        
+        
         let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed")!
         let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
         let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
         let task = session.dataTask(with: request){
             (data,response,error) in
-            if let error = error{
-                print(error.localizedDescription)
-            }else if let data=data{
+            if error != nil {
+                let errorController = UIAlertController(title: "No Internet",message: "The Internet connection appears to be offline", preferredStyle: .alert)
+                let tryAgainAction = UIAlertAction(title: "try again", style: .default){(action) in
+                    self.fetchMovies()
+                    
+                }
+                errorController.addAction(tryAgainAction)
+                
+                self.present(errorController, animated: true)
+                }else if let data=data{
                 let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String:Any]
                 
                 let movies = dataDictionary["results"] as! [[String: Any]]
+                
                 self.movies = movies
+                self.allMovies = movies
                 self.tableView.reloadData()
                 self.refreshController.endRefreshing()
             }
         }
         task.resume()
-        loadingCircle.stopAnimating()
+       loadingCircle.stopAnimating()
         
+    }
+    func searchBar(_ movieSearch: UISearchBar, textDidChange searchText: String){
+        let data = allMovies
+        
+        
+        movies = searchText.isEmpty ? data : data.filter{(item:[String: Any]) -> Bool in
+            return String(item["title"] as! String).range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil
+        }
+        tableView.reloadData()
     }
 
     /*
