@@ -1,72 +1,59 @@
 //
-//  NowPlayingViewController.swift
+//  SuperheroViewController.swift
 //  flix
 //
-//  Created by Sierra Klix on 9/10/18.
+//  Created by Sierra Klix on 9/21/18.
 //  Copyright © 2018 Ryan McCommon. All rights reserved.
 //
 
 import UIKit
 import AlamofireImage
 
-class NowPlayingViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
+class SuperheroViewController: UIViewController,UICollectionViewDataSource, UISearchBarDelegate {
+
     @IBOutlet weak var movieSearch: UISearchBar!
     
-    @IBOutlet weak var loadingCircle: UIActivityIndicatorView!
+    var movies: [[String:Any]] = []
+    var allMovies: [[String:Any]] = []
     
-    var movies: [[String: Any]] = []
-    var allMovies: [[String: Any]] = []
     var refreshController:UIRefreshControl!
-
-    @IBOutlet weak var tableView: UITableView!
+    
+    @IBOutlet weak var collectionView: UICollectionView!
     
     override func viewDidLoad() {
-        loadingCircle.startAnimating()
         super.viewDidLoad()
-       
-        tableView.dataSource = self
-        tableView.delegate = self
+        collectionView.dataSource = self
         movieSearch.delegate = self
-        refreshController = UIRefreshControl()
-        refreshController.addTarget(self, action: #selector(NowPlayingViewController.didPullDown(_:)), for: .valueChanged)
-        tableView.insertSubview(refreshController, at: 0)
-        tableView.rowHeight = 250
-        
         fetchMovies()
+        refreshController = UIRefreshControl()
+        refreshController.addTarget(self, action: #selector(SuperheroViewController.didPullDown(_:)), for: .valueChanged)
+        collectionView.insertSubview(refreshController, at: 0)
         
-        
-        
+        // Do any additional setup after loading the view.
     }
+    
     @objc func didPullDown(_ refreshController: UIRefreshControl){
         fetchMovies()
     }
-    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return movies.count
     }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "movieCell", for: indexPath) as! MovieCell
-        let movie = self.movies[indexPath.row]
-        let title  = movie["title"] as! String
-        let overview = movie["overview"] as! String
-        cell.title.text = title
-        cell.overview.text = overview
-        let posterPath = movie["poster_path"] as! String
-        let baseURL = "https://image.tmdb.org/t/p/w500/"
-        let posterURL = URL(string: baseURL + posterPath)!
-        cell.movieImage.af_setImage(withURL: posterURL)
-        
-        
-        
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PosterCell", for: indexPath) as! PosterCell
+        let movie = movies[indexPath.item]
+        if let posterPathString = movie["poster_path"] as? String{
+            let baseUrlString = "https://image.tmdb.org/t/p/w500"
+            let posterURL = URL(string: baseUrlString + posterPathString)!
+            cell.posterImage.af_setImage(withURL: posterURL)
+        }
         return cell
     }
+    
     func fetchMovies(){
         
         
@@ -84,24 +71,24 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource, UITable
                 errorController.addAction(tryAgainAction)
                 
                 self.present(errorController, animated: true)
-                }else if let data=data{
+            }else if let data=data{
                 let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String:Any]
                 
                 let movies = dataDictionary["results"] as! [[String: Any]]
                 
                 self.movies = movies
                 self.allMovies = movies
-                self.tableView.reloadData()
+                self.collectionView.reloadData()
                 self.refreshController.endRefreshing()
             }
         }
         task.resume()
-       loadingCircle.stopAnimating()
+        //loadingCircle.stopAnimating()
         
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let cell = sender as! UITableViewCell
-        if let indexPath = tableView.indexPath(for: cell){
+        let cell = sender as! UICollectionViewCell
+        if let indexPath = collectionView.indexPath(for: cell){
             let movie = movies[indexPath.row]
             let vc =  segue.destination as! movieCellViewViewController
             vc.movie = movie
@@ -115,7 +102,7 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource, UITable
         movies = searchText.isEmpty ? data : data.filter{(item:[String: Any]) -> Bool in
             return String(item["title"] as! String).range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil
         }
-        tableView.reloadData()
+       collectionView.reloadData()
     }
 
     /*
