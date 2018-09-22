@@ -8,15 +8,18 @@ Time spent: *5* hours spent in total
 
 The following **required** user stories are complete:
 
-- [X ] User sees app icon in home screen and styled launch screen (+1pt)
-- [ X] User can scroll through a list of movies currently playing in theaters from The Movie DB API (+5pt)
-- [ X] User can "Pull to refresh" the movie list (+2pt)
-- [ X] User sees a loading state while waiting for the movies to load (+2pt)
+- [X] User sees app icon in home screen and styled launch screen (+1pt)
+- [X] User can scroll through a list of movies currently playing in theaters from The Movie DB API (+5pt)
+- [X] User can "Pull to refresh" the movie list (+2pt)
+- [X] User sees a loading state while waiting for the movies to load (+2pt)
+- [X] User can tap a cell to see a detail view (+5pts)
+- [X] User can tap a tab bar button to view a grid layout of Movie Posters using a CollectionView (+5pts)
 
 The following **stretch** user stories are implemented:
 
-- [ X] User sees an alert when there's a networking error (+1pt)
-- [ X] User can search for a movie (+3pt)
+- [X] User sees an alert when there's a networking error (+1pt)
+- [X] User can search for a movie (+3pt)
+- [X] User can tap a poster in the collection view to see a detail screen of that movie (+3pts)
 - [ ] While poster is being fetched, user see's a placeholder image (+1pt)
 - [ ] User sees image transition for images coming from network, not when it is loaded from cache (+1pt)
 - [ ] Customize the selection effect of the cell (+1pt)
@@ -35,7 +38,7 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 Here's a walkthrough of implemented user stories:
 
-<img src='https://image.ibb.co/kd2MZz/flix_Walkthrough.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://image.ibb.co/eQaJCU/flix_Walkthrough.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
