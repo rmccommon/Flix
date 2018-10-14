@@ -22,27 +22,30 @@ class movieCellViewViewController: UIViewController {
     @IBOutlet weak var movieOverview: UILabel!
     @IBOutlet weak var releaseDate: UILabel!
     @IBOutlet weak var movieTitle: UILabel!
-    var movie: [String:Any]?
+    
+    var movie: Movie?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if let movie = movie{
-             movieTitle.text = movie["title"] as? String
-            movieOverview.text = movie["overview"] as? String
-            releaseDate.text = movie["release_date"] as? String
-            let backdropPath = movie[MovieKeys.backDrop] as! String
-            let posterPath = movie["poster_path"] as! String
-            let baseURLpath =  "https://image.tmdb.org/t/p/w500"
-            let backDropURL = URL(string: baseURLpath + backdropPath)!
-            let posterURL = URL(string: baseURLpath + posterPath)!
-            moviePoster.af_setImage(withURL: posterURL)
-            movieBackDrop.af_setImage(withURL: backDropURL)
-            
-            
-            
+      
+        if movie?.title != nil{
+            movieTitle.text = movie?.title
         }
+        if movie?.description != nil{
+            movieOverview.text = movie?.description
+        }
+        if movie?.release != nil{
+            releaseDate.text = movie?.release
+        }
+        if let mainPic = movie?.mainImageUrl{
+            moviePoster.af_setImage(withURL: mainPic)
+        }
+        if let backPic = movie?.backgroundURL{
+            movieBackDrop.af_setImage(withURL: backPic)
+        }
+        
+        
         // Do any additional setup after loading the view.
     }
 
